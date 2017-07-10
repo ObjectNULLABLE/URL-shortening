@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const addToDB = require('../DAL/link-manager');
+const addToDB = require('../DAL/link-manager').addToDB;
 
 const usersRouter = express.Router();
 

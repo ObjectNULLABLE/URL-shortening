@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "fnv-plus": "^1.2.12",
     "mongoose": "^4.11.1",
     "prettier": "^1.5.2"
   }
