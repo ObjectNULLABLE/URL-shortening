@@ -1,9 +1,10 @@
 const fnv = require('fnv-plus');
 const db = require('../DAL/connect-to-db');
-const linkModel = require('../DAL/shemas/link-shema');
+const linkModel = require('../DAL/shemas/link');
 
 function addToDB(req) {
   const hash = fnv.hash(req.body.url).str();
+
   const link = new linkModel({
     url: req.body.url,
     hash: hash,
@@ -11,10 +12,13 @@ function addToDB(req) {
     author: req.params.id //check that, when complit users
   });
 
-  return link.save(function(err, link) {
-    if (err) return console.error(err);
-    console.log(`url: ${link.url} have been saved with ${link.hash} hash`);
-  });
+  return link
+    .exec()
+    .save()
+    .then(function() {
+      console.log(`Link: ${link.url} have been saved with hash: ${link.hash}`);
+    })
+    .catch(err => err);
 }
 
 function takeFromDB(req) {
@@ -25,5 +29,16 @@ function takeFromDB(req) {
     .catch(err => err);
 }
 
+function deleteOne(req) {
+  return linkModel
+    .remove({ hash: req.body.hash })
+    .exec()
+    .then(function() {
+      console.log(`Link have been deleted`);
+    })
+    .catch(err => err);
+}
+
 module.exports.addToDB = addToDB;
 module.exports.takeFromDB = takeFromDB;
+module.exports.deleteOne = deleteOne;
