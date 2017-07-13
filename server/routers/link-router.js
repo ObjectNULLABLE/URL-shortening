@@ -7,8 +7,12 @@ const linkRouter = express.Router();
 
 linkRouter.use(bodyParser.json());
 
+linkRouter.get('/links/:hash', function(req, res) {
+  takeFromDB('hash', req.params.hash).then(data => res.send(data));
+});
+
 linkRouter.get('/:hash', function(req, res) {
-  const gotLink = takeFromDB(req).then(data => res.send(data));
+  takeFromDB('hash', req.params.hash).then(data => res.send(data.url));
 });
 
 linkRouter.post('/:hash', function(req, res) {});

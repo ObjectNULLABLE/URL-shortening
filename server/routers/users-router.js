@@ -1,23 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const addToDB = require('../DAL/link-manager').addToDB;
-const deleteOne = require('../DAL/link-manager').deleteOne;
+const linksDal = require('../DAL/link-manager');
 
 const usersRouter = express.Router();
 
 usersRouter.use(bodyParser.json());
 
-usersRouter.get('/:id', function(req, res) {
+usersRouter.get('/:userId', function(req, res) {
   res.send(`id: ${req.params.id} | user name: ${req.body.name}`);
 });
 
-usersRouter.post('/:id/links', function(req, res) {
-  addToDB(req);
+usersRouter.post('/:userId/links', function(req, res) {
+  linksDal.addToDB(req);
   res.sendStatus(200);
 });
 
-usersRouter.delete('/:id/links', function(req, res) {
-  deleteOne(req);
+usersRouter.delete('/:userId/links', function(req, res) {
+  linksDal.deleteOne(req);
+  res.sendStatus(200);
+});
+
+usersRouter.put('/:userId/links', function(req, res) {
+  linksDal.updateOne(req.body.id, req.body.newData);
   res.sendStatus(200);
 });
 
