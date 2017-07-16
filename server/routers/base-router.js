@@ -5,8 +5,17 @@ const linkRouter = require('./link-router');
 
 const baseRouter = express.Router();
 
-baseRouter.use("/users", usersRouter);
+baseRouter.use('/users', usersRouter);
 
-baseRouter.use("/", linkRouter); //have to be used in last turn!!!
+baseRouter.use('/links', linkRouter);
+
+linkRouter.post('/register', function(req, res) {
+  createUser(req);
+  res.sendStatus(200);
+});
+//have to be used in last turn!!!
+linkRouter.get('/:hash', function(req, res) {
+  takeFromDB('hash', req.params.hash).then(data => res.redirect(data.url));
+});
 
 module.exports = baseRouter;

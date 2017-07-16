@@ -10,6 +10,10 @@ usersRouter.get('/:userId', function(req, res) {
   res.send(`id: ${req.params.id} | user name: ${req.body.name}`);
 });
 
+usersRouter.delete('/:userId', function(req, res) {}); //!
+
+usersRouter.get('/userId/logout', function(req, res) {}); //!
+
 usersRouter.post('/:userId/links', function(req, res) {
   linksDal.addToDB(req);
   res.sendStatus(200);

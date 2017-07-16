@@ -9,7 +9,7 @@ function addToDB(req) {
     url: req.body.url,
     hash: hash,
     name: req.body.name,
-    author: req.params.id //check that, when complete users
+    authorID: req.params.id //check that, when complete users
   });
 
   return link
@@ -29,9 +29,22 @@ function takeFromDB(key, value) {
     .catch(err => err);
 }
 
+function takeAllByTag(tag) {
+  return linkModel
+    .find({
+      tags: tag
+    })
+    .exec()
+    .then(links => {
+      console.log(`Find: ${links}`);
+      return links;
+    })
+    .catch(err => err);
+}
+
 function deleteOne(req) {
   return linkModel
-    .remove({ hash: req.body.hash })
+    .findByIdAndRemove(req.params.id)
     .exec()
     .then(function() {
       console.log(`Link have been deleted`);
@@ -45,5 +58,6 @@ function updateOne(id, newData) {
 
 module.exports.addToDB = addToDB;
 module.exports.takeFromDB = takeFromDB;
+module.exports.takeAllByTag = takeAllByTag;
 module.exports.deleteOne = deleteOne;
 module.exports.updateOne = updateOne;

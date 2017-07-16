@@ -5,7 +5,7 @@ var linkSchema = mongoose.Schema(
     url: String,
     hash: String,
     name: String,
-    author: String,
+    authorID: String,
     tags: [String],
     transitions: {
       type: Number,
