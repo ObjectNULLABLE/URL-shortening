@@ -1,52 +1,44 @@
-const jwt = require('jsonwebtoken');
-
 const db = require('../DAL/connect-to-db');
 const userModel = require('../DAL/shemas/user');
-const jwtKey = require('../tools/auth-strategy').key;
 
-function addUser(req) {
+function addUser(userProps) {
   const user = new userModel({
-    username: req.body.username,
-    password: req.body.password
+    username: userProps.username,
+    password: userProps.password
   });
 
   return user
     .save()
     .then(console.log(`New user ${user.username} have been created.`))
-    .catch(err => err);
+    .catch(err => {
+      throw err;
+    });
 }
 
-function checkUserAndSendToken(req, res) {
-  if (req.body.username && req.body.password) {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    const user = userModel.findOne({ username: username }).exec().then(user => {
+function getUser(userProps) {
+  const user = userModel
+    .findOne({ username: userProps.username })
+    .exec()
+    .then(user => {
       if (!user) {
-        res.status(401).json({ message: 'no such user found' });
-      }
-
-      if (user.password === req.body.password) {
-        var payload = {
-          id: user._id,
-          username: username
-        };
-        //яТебяЛюблю.Очень
-        var token = jwt.sign(payload, jwtKey);
-
-        res.json({ message: 'ok', token: token, username: username });
+        throw Error('user not found');
+      } else if (user.password === userProps.password) {
+        return user;
       } else {
-        res.status(401).json({ message: 'passwords did not match' });
+        throw Error('bad password');
       }
     });
-  }
 }
 
 function updateUser() {}
 
-function deleteUser() {}
+function deleteUser(userID) {
+  userModel.findByIdAndRemove(userID).exec().then().catch(err => {
+    throw err;
+  });
+}
 
 module.exports.addUser = addUser;
-module.exports.checkUserAndSendToken = checkUserAndSendToken;
+module.exports.getUser = getUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;

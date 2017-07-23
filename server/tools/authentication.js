@@ -3,10 +3,11 @@ const passportJwt = require('passport-jwt');
 const UserModel = require('../DAL/shemas/user');
 
 const JwtStrategy = passportJwt.Strategy;
+const secret = 'fjS!g8fgnsdjwKHFD3nfs8nla&m9n3ms';
 
 let jwtStrategyOptions = {
   jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeader(),
-  secretOrKey: 'fjS!g8fgnsdjwKHFD3nfs8nla&m9n3ms'
+  secretOrKey: secret
 };
 
 passport.use(
@@ -23,5 +24,5 @@ passport.use(
   })
 );
 
-module.exports.key = jwtStrategyOptions.secretOrKey;
+module.exports.secret = secret;
 module.exports.passport = passport;

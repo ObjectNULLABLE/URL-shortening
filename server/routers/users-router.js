@@ -24,11 +24,23 @@ usersRouter.get('/:username/links', function(req, res) {
 });
 
 usersRouter.post('/:username/links', function(req, res) {
-  linksDAL.addToDB(req, res);
+  try {
+    linksDAL.addToDB({ ...req.body }, req.user._id);
+    res.sendStatus('201');
+  } catch (error) {
+    res.sendStatus(500);
+    console.log(error.message);
+  }
 });
 
 usersRouter.delete('/:username/links', function(req, res) {
-  linksDAL.deleteOne(req, res);
+  try {
+    linksDAL.deleteOne(req.body.linkID);
+    res.sendStatus(202);
+  } catch (error) {
+    res.sendStatus(500);
+    console.log(error.message);
+  }
 });
 
 usersRouter.put('/:username/links', function(req, res) {
