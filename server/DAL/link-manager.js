@@ -2,14 +2,15 @@ const fnv = require('fnv-plus');
 const db = require('../DAL/connect-to-db');
 const linkModel = require('../DAL/shemas/link');
 
-function addToDB(req) {
-  const hash = fnv.hash(req.body.url).str();
+function addToDB(linkProps, authorID) {
+  const hash = fnv.hash(linkProps.url).str();
 
   const link = new linkModel({
-    url: req.body.url,
+    url: linkProps.url,
     hash: hash,
-    name: req.body.name,
-    authorID: req.params.id //check that, when complete users
+    name: linkProps.name,
+    authorID: authorID,
+    tags: linkProps.tags
   });
 
   return link
@@ -18,14 +19,17 @@ function addToDB(req) {
     .then(function() {
       console.log(`Link: ${link.url} have been saved with hash: ${link.hash}`);
     })
-    .catch(err => err);
+    .catch(err => {
+      console.log(err);
+      throw err;
+    });
 }
 
 function takeFromDB(key, value) {
   return linkModel
-    .findOne({ [key]: value })
+    .find({ [key]: value })
     .exec()
-    .then(link => link)
+    .then(links => links)
     .catch(err => err);
 }
 
@@ -39,17 +43,15 @@ function takeAllByTag(tag) {
       console.log(`Find: ${links}`);
       return links;
     })
-    .catch(err => err);
+    .catch(err => {
+      throw err;
+    });
 }
 
-function deleteOne(req) {
-  return linkModel
-    .findByIdAndRemove(req.params.id)
-    .exec()
-    .then(function() {
-      console.log(`Link have been deleted`);
-    })
-    .catch(err => err);
+function deleteOne(linkID) {
+  return linkModel.findByIdAndRemove(linkID).exec().then().catch(err => {
+    throw err;
+  });
 }
 
 function updateOne(id, newData) {
