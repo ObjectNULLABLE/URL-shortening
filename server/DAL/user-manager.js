@@ -1,25 +1,44 @@
 const db = require('../DAL/connect-to-db');
 const userModel = require('../DAL/shemas/user');
 
-function addUser(req) {
+function addUser(userProps) {
   const user = new userModel({
-    username: req.body.username,
-    password: req.body.password
+    username: userProps.username,
+    password: userProps.password
   });
 
   return user
     .save()
     .then(console.log(`New user ${user.username} have been created.`))
-    .catch(err => err);
+    .catch(err => {
+      throw err;
+    });
 }
 
-function checkUser() {}
+function getUser(userProps) {
+  const user = userModel
+    .findOne({ username: userProps.username })
+    .exec()
+    .then(user => {
+      if (!user) {
+        throw Error('user not found');
+      } else if (user.password === userProps.password) {
+        return user;
+      } else {
+        throw Error('bad password');
+      }
+    });
+}
 
 function updateUser() {}
 
-function deleteUser() {}
+function deleteUser(userID) {
+  userModel.findByIdAndRemove(userID).exec().then().catch(err => {
+    throw err;
+  });
+}
 
 module.exports.addUser = addUser;
-module.exports.checkUser = checkUser;
+module.exports.getUser = getUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;

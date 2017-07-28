@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 
 var linkSchema = mongoose.Schema(
   {
-    url: String,
-    hash: String,
+    url: { type: String, required: true },
+    hash: { type: String, required: true },
     name: String,
-    authorID: String,
+    authorID: { type: String, required: true },
     tags: [String],
     transitions: {
       type: Number,
