@@ -14,6 +14,17 @@ class ApiFetcher {
 
     return instance;
   }
+
+  authenticate(token) {
+    //this function will get token from local storage, set it to http header in axios options
+    //and return the instance of axios, like in constructor above
+    if (!token) throw Error('not authorized');
+    const options = { ...this.options };
+    options.headers.authenticate = 'JWT ' + token;
+
+    let instance = axios.create(options);
+    return instance;
+  }
 }
 
 export default new ApiFetcher();

@@ -25,11 +25,25 @@ function addToDB(linkProps, authorID) {
     });
 }
 
+function takeAll() {
+  return linkModel
+    .find({})
+    .exec()
+    .then(links => {
+      console.log(links);
+      return links;
+    })
+    .catch(err => err);
+}
+
 function takeFromDB(key, value) {
   return linkModel
     .find({ [key]: value })
     .exec()
-    .then(links => links)
+    .then(links => {
+      console.log(links);
+      return links;
+    })
     .catch(err => err);
 }
 
@@ -59,6 +73,7 @@ function updateOne(id, newData) {
 }
 
 module.exports.addToDB = addToDB;
+module.exports.takeAll = takeAll;
 module.exports.takeFromDB = takeFromDB;
 module.exports.takeAllByTag = takeAllByTag;
 module.exports.deleteOne = deleteOne;

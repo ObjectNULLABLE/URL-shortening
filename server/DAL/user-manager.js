@@ -16,7 +16,7 @@ function addUser(userProps) {
 }
 
 function getUser(userProps) {
-  const user = userModel
+  return userModel
     .findOne({ username: userProps.username })
     .exec()
     .then(user => {
@@ -27,6 +27,9 @@ function getUser(userProps) {
       } else {
         throw Error('bad password');
       }
+    })
+    .catch(err => {
+      throw err;
     });
 }
 

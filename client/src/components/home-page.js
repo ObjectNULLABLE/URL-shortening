@@ -5,9 +5,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <div>
-        Hello! Welcome to my URL shortening service! I gonna be a fucking cool
-        programmer :)
-        <Link to="/links">My link to links page</Link>
+        <Link to="/links">All links</Link>
       </div>
     );
   }

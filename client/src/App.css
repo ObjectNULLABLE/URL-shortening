@@ -18,7 +18,11 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.header-panel {
+  border: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  position: fixed;
+  padding: 5px;
+  right: 0;
 }

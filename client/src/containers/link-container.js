@@ -13,9 +13,8 @@ export default class LinkContainer extends Component {
   }
 
   componentWillMount() {
-    const hash = 'f9tlcdnvlx';
     apiFetcher
-      .get(`/links/${hash}`)
+      .get(`/links`)
       .then(response => {
         this.setState({
           linkData: response.data
@@ -24,7 +23,19 @@ export default class LinkContainer extends Component {
       .catch(error => console.log(error));
   }
 
+  renderLinkList() {
+    if (!this.state.linkData) {
+      return null;
+    }
+    const { linkData } = this.state;
+    return linkData.map(mappingLink => <LinkView link={mappingLink} />);
+  }
+
   render() {
-    return <LinkView linkData={this.state.linkData} />;
+    return (
+      <div>
+        {this.renderLinkList()}
+      </div>
+    );
   }
 }

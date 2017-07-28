@@ -25,7 +25,7 @@ usersRouter.get('/:username/links', function(req, res) {
 
 usersRouter.post('/:username/links', function(req, res) {
   try {
-    linksDAL.addToDB({ ...req.body }, req.user._id);
+    linksDAL.addToDB(req.body, req.user._id);
     res.sendStatus('201');
   } catch (error) {
     res.sendStatus(500);

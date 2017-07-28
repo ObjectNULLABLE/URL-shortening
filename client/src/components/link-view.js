@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class LinkView extends Component {
   render() {
-    const link = this.props.linkData;
+    const link = this.props.link;
     if (!link) {
       return null;
     }
@@ -10,7 +10,7 @@ export default class LinkView extends Component {
     return (
       <div>
         <h4>{link.name}</h4>
-        Author: {link.author}
+        Author: {link.authorID}
         <br />
         URL: <a href={link.url}>{link.url}</a>
       </div>
