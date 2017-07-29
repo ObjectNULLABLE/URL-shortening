@@ -6,24 +6,22 @@ const usersRouter = express.Router();
 
 usersRouter.use(bodyParser.json());
 
-usersRouter.get('/:username', function(req, res) {
+usersRouter.get('/current', function(req, res) {
   res.send(`id: ${req.user._id} | user name: ${req.user.username}`);
 });
 
-usersRouter.delete('/:username', function(req, res) {}); //!
+usersRouter.delete('/current', function(req, res) {}); //!
 
-usersRouter.get('/:username/logout', function(req, res) {
+usersRouter.get('/current/logout', function(req, res) {
   res.redirect('/'); //delete token on client
 });
 
-usersRouter.get('/:username/links', function(req, res) {
-  const username = req.user.username;
-  if (username === req.params.username)
-    linksDAL.takeFromDB('authorID', username).then(links => res.send(links));
-  else res.sendStatus(401);
+usersRouter.get('/current/links', function(req, res) {
+  const userID = req.user.id;
+  linksDAL.takeFromDB('authorID', userID).then(links => res.send(links));
 });
 
-usersRouter.post('/:username/links', function(req, res) {
+usersRouter.post('/current/links', function(req, res) {
   try {
     linksDAL.addToDB(req.body, req.user._id);
     res.sendStatus('201');
@@ -33,7 +31,7 @@ usersRouter.post('/:username/links', function(req, res) {
   }
 });
 
-usersRouter.delete('/:username/links', function(req, res) {
+usersRouter.delete('/current/links', function(req, res) {
   try {
     linksDAL.deleteOne(req.body.linkID);
     res.sendStatus(202);
@@ -43,7 +41,7 @@ usersRouter.delete('/:username/links', function(req, res) {
   }
 });
 
-usersRouter.put('/:username/links', function(req, res) {
+usersRouter.put('/current/links', function(req, res) {
   linksDAL.updateOne(req.body.id, req.body.newData);
   res.sendStatus(200);
 });

@@ -5,9 +5,9 @@ export default class UserMenu extends Component {
   render() {
     return (
       <div>
-        <p>
+        <div>
           {this.props.username}
-        </p>
+        </div>
         <Link to="/my-links">My links</Link>
         <br />
         <Link to="/profile-settings">Settings</Link>

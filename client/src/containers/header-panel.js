@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import apiFetcher from '../tools/apiFetcher';
+import { Link } from 'react-router-dom';
 
+import apiFetcher from '../tools/apiFetcher';
 import LoginForm from './login-form';
 import UserMenu from '../components/user-menu';
 
@@ -53,9 +54,11 @@ export default class HeaderPanel extends Component {
     return (
       <div>
         <div>logo</div>
+        <Link to="/">Homepage</Link>
         <div className="header-panel">
           {this.renderUserCorner()}
         </div>
+        
       </div>
     );
   }

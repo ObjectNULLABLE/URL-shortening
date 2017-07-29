@@ -14,6 +14,10 @@ const baseRouter = express.Router();
 
 baseRouter.use(bodyParser.json());
 
+baseRouter.options('/', function(req, res) {
+  res.sendStatus(200);
+});
+
 baseRouter.use(
   '/users',
   pasport.authenticate('jwt', { session: false }),

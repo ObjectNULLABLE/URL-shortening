@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import apiFetcher from '../tools/apiFetcher';
 
-import LinkView from '../components/link-view';
+import LinkList from '../components/link-list';
 
 export default class LinkContainer extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class LinkContainer extends Component {
 
   componentWillMount() {
     apiFetcher
-      .get(`/links`)
+      .get('/links')
       .then(response => {
         this.setState({
           linkData: response.data
@@ -23,19 +23,7 @@ export default class LinkContainer extends Component {
       .catch(error => console.log(error));
   }
 
-  renderLinkList() {
-    if (!this.state.linkData) {
-      return null;
-    }
-    const { linkData } = this.state;
-    return linkData.map(mappingLink => <LinkView link={mappingLink} />);
-  }
-
   render() {
-    return (
-      <div>
-        {this.renderLinkList()}
-      </div>
-    );
+    return <LinkList links={this.state.linkData} />;
   }
 }

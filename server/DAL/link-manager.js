@@ -14,7 +14,6 @@ function addToDB(linkProps, authorID) {
   });
 
   return link
-    .exec()
     .save()
     .then(function() {
       console.log(`Link: ${link.url} have been saved with hash: ${link.hash}`);
