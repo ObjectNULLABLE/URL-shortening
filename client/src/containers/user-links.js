@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import apiFetcher from '../tools/apiFetcher';
 
 import LinkList from '../components/link-list';
-import LinkCreationForm from './link-creation-form';
+import LinkCreationForm from '../components/forms/link-creation-form';
 
 export default class LinkContainer extends Component {
   constructor(props) {
@@ -29,7 +29,10 @@ export default class LinkContainer extends Component {
   }
 
   createLink(link) {
-    apiFetcher.authenticate().post(`/users/current/links`,link).then(this.getUserLinks);
+    apiFetcher
+      .authenticate()
+      .post(`/users/current/links`, link)
+      .then(this.getUserLinks);
   }
 
   componentWillMount() {
@@ -39,7 +42,7 @@ export default class LinkContainer extends Component {
   render() {
     return (
       <div>
-        <LinkCreationForm onCreate={this.createLink}/>
+        <LinkCreationForm onCreate={this.createLink} />
         <LinkList links={this.state.linkData} />
       </div>
     );

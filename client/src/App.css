@@ -18,6 +18,9 @@
   font-size: large;
 }
 
+.reg-modal {
+}
+
 .header-panel {
   border: solid;
   border-radius: 5px;
@@ -25,4 +28,5 @@
   position: fixed;
   padding: 5px;
   right: 0;
+  top: 0;
 }

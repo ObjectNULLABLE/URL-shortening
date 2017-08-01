@@ -27,8 +27,8 @@ baseRouter.use(
 baseRouter.use('/links', linkRouter);
 
 baseRouter.post('/register', function(req, res) {
-  addUser(req.body);
-  checkUserAndSendToken(req, res);
+  addUser(req.body).then(() =>
+  checkUserAndSendToken(req, res));
 });
 
 baseRouter.post('/login', function(req, res) {

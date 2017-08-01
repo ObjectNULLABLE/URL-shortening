@@ -4,13 +4,14 @@ const linkModel = require('../DAL/shemas/link');
 
 function addToDB(linkProps, authorID) {
   const hash = fnv.hash(linkProps.url).str();
+  const tags = linkProps.tags.split(", ");
 
   const link = new linkModel({
     url: linkProps.url,
     hash: hash,
     name: linkProps.name,
     authorID: authorID,
-    tags: linkProps.tags
+    tags: tags
   });
 
   return link
@@ -29,7 +30,6 @@ function takeAll() {
     .find({})
     .exec()
     .then(links => {
-      console.log(links);
       return links;
     })
     .catch(err => err);
@@ -40,7 +40,6 @@ function takeFromDB(key, value) {
     .find({ [key]: value })
     .exec()
     .then(links => {
-      console.log(links);
       return links;
     })
     .catch(err => err);

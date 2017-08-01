@@ -12,7 +12,15 @@ class ApiFetcher {
 
     let instance = axios.create(this.options);
     instance.authenticate = this.authenticate.bind(this);
+    instance.recordCreds = this.recordCreds.bind(this);
+
     return instance;
+  }
+
+  recordCreds(creds){
+    localStorage.setItem('myToken', creds.token);
+      localStorage.setItem('username', creds.username);
+      localStorage.setItem('userID', creds.userID);
   }
 
   authenticate() {

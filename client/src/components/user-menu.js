@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default class UserMenu extends Component {
   render() {
     return (
-      <div>
-        <div>
-          {this.props.username}
-        </div>
-        <Link to="/my-links">My links</Link>
-        <br />
-        <Link to="/profile-settings">Settings</Link>
-        <button onClick={this.props.onLogout}>Logout</button>
-      </div>
+      <DropdownButton title={this.props.username} id="user-dropdown">
+        <MenuItem href="/my-links">My links</MenuItem>
+        <MenuItem href="/profile-settings">Settings</MenuItem>
+        <MenuItem divider />
+        <MenuItem componentClass={Button} onClick={this.props.onLogout}>
+          Logout
+        </MenuItem>
+      </DropdownButton>
     );
   }
 }
